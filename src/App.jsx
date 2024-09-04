@@ -19,14 +19,21 @@ import axios from 'axios'
 import { useGoogleLogin } from '@react-oauth/google';
 
 function App() {
-  const login = useGoogleLogin({
+  const loginWithGoogle = useGoogleLogin({
     onSuccess: tokenResponse => console.log(tokenResponse),
     onError: error => console.error(error)
   });
 
+  const login = () => {
+    axios.get('http://localhost:3000/auth/google_oauth2')
+    .then(response => console.log(response.data))
+    .then(error => console.log(error))
+  }
+  
   return (
     <>
-    <button onClick={() => login()}>Sign in with Google 🚀</button>
+    <button onClick={() => login()}>Sign in with Google 🚀 (Con backend)</button>
+    <button onClick={() => loginWithGoogle()}>Sign in with Google 🚀 (Sin backend)</button>
     </>
   )
 }
