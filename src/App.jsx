@@ -1,39 +1,36 @@
 import './App.css'
-import axios from 'axios'
-// function App() {
-
-//   const handleLogin = () => {
-//     axios.post('http://localhost:3000/users/auth/google_oauth2')
-//     .then(response => {
-//       console.log(response.data)
-//     }).then(error => {
-//       console.log(error)
-//     })
-//   }
-
-//   return (
-//     <button onClick={() => handleLogin() }> Login with google</button>
-//   )
-// }
-
-import { useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google'
 
 function App() {
+  // const sendBackend = (forward) => {
+  //   axios.get('http://localhost:3000/auth/google_oauth2/callback', {
+  //     params: {
+  //       code: forward.code,
+  //       prompt: forward.prompt,
+  //       authuser: forward.authuser,
+  //       scope: forward.scope
+  //     }
+  //   }).then(response => {
+  //     console.log(response.data)
+  //   }
+  //   ).then(error => {
+  //     console.log(error)
+  //   })
+  // }
+
   const loginWithGoogle = useGoogleLogin({
-    onSuccess: tokenResponse => console.log(tokenResponse),
+    flow: 'auth-code',
+    ux_mode: 'redirect',
+    scope: 'email profile',
+    // redirect_uri: 'http://localhost:3000/auth/google_oauth2/callback',
+    redirect_uri: 'http://localhost:5173/callback',
+    onSuccess: response => console.log(response),
     onError: error => console.error(error)
   });
-
-  const login = () => {
-    axios.get('http://localhost:3000/auth/google_oauth2')
-    .then(response => console.log(response.data))
-    .then(error => console.log(error))
-  }
   
   return (
     <>
-    <button onClick={() => login()}>Sign in with Google 🚀 (Con backend)</button>
-    <button onClick={() => loginWithGoogle()}>Sign in with Google 🚀 (Sin backend)</button>
+    <button onClick={() => loginWithGoogle()}>Sign in with Google 🚀</button>
     </>
   )
 }
