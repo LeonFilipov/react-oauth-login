@@ -9,12 +9,9 @@ function Callback() {
     console.log(searchParams.get('code'));
     useEffect(() => {
         const requestToken = () => {
-            axios.get('http://localhost:3000/auth/google_oauth2/callback', {
+            axios.get('http://52.14.63.57:3000/auth/google_oauth2/callback', {
                 params: {
-                    code: searchParams.get('code'),
-                    prompt: searchParams.get('prompt'),
-                    authuser: searchParams.get('authuser'),
-                    scope: searchParams.get('scope')
+                    code: searchParams.get('code')
                 }
             })
             .then(response => setToken(response.data.token))
@@ -29,7 +26,7 @@ function Callback() {
 
     const handleClick = () => {
         console.log(token);
-        axios.get('http://localhost:3000/authorization', {
+        axios.get('http://52.14.63.57:3000/authorization', {
             headers:{
                 Authorization: `Bearer ${token}`
             }
@@ -40,7 +37,7 @@ function Callback() {
     
     return (
         <div>
-            <button onClick={() => handleClick()}></button>
+            <button onClick={() => handleClick()}>Check authorization</button>
         </div>
     )
 }
