@@ -1,30 +1,27 @@
 import './App.css'
 import { useGoogleLogin } from '@react-oauth/google'
+import axios from 'axios'
 
 function App() {
-  // const sendBackend = (forward) => {
-  //   axios.get('http://localhost:3000/auth/google_oauth2/callback', {
-  //     params: {
-  //       code: forward.code,
-  //       prompt: forward.prompt,
-  //       authuser: forward.authuser,
-  //       scope: forward.scope
-  //     }
-  //   }).then(response => {
-  //     console.log(response.data)
-  //   }
-  //   ).then(error => {
-  //     console.log(error)
-  //   })
-  // }
+  const handleSuccess = (code) => {
+    axios.get('http://localhost:3000/auth/google_oauth2/callback', {
+      params: {
+        code: code
+      }
+    }).then(response => {
+      console.log(response.data)
+    }
+    ).then(error => {
+      console.log(error)
+    })
+  }
 
   const loginWithGoogle = useGoogleLogin({
     flow: 'auth-code',
     ux_mode: 'redirect',
     scope: 'email profile',
-    // redirect_uri: 'http://localhost:3000/auth/google_oauth2/callback',
-    redirect_uri: 'http://localhost:5173/callback',
-    onSuccess: response => console.log(response),
+    redirect_uri: 'http://localhost:5173/',
+    onSuccess: response => handleSuccess(response.code),
     onError: error => console.error(error)
   });
   
