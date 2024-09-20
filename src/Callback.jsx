@@ -2,6 +2,9 @@ import { useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+const IP = 'http://52.14.63.57'
+// const IP = 'http://localhost'
+
 function Callback() {
     const [searchParams] = useSearchParams();
     const [token, setToken] = useState(null);
@@ -9,7 +12,7 @@ function Callback() {
     console.log(searchParams.get('code'));
     useEffect(() => {
         const requestToken = () => {
-            axios.get('http://52.14.63.57:3000/auth/google_oauth2/callback', {
+            axios.get(`${IP}:3000/auth/google_oauth2/callback`, {
                 params: {
                     code: searchParams.get('code')
                 }
@@ -26,7 +29,7 @@ function Callback() {
 
     const handleClick = () => {
         console.log(token);
-        axios.get('http://52.14.63.57:3000/authorization', {
+        axios.get(`${IP}:3000/profile`, {
             headers:{
                 Authorization: `Bearer ${token}`
             }
